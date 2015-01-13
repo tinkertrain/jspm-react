@@ -1,0 +1,29 @@
+{
+  "browser": true,
+  "jquery": true,
+  "node": true,
+  "esnext": true,
+  "camelcase": false,
+  "eqeqeq": true,
+  "eqnull": true,
+  "indent": 2,
+  "latedef": true,
+  "newcap": true,
+  "quotmark": "single",
+  "trailing": true,
+  "undef": true,
+  "unused": false,
+  "maxlen": 100,
+  "strict": true,
+  "latedef": false,
+  "expr": false,
+  "globals": {
+    "describe": false,
+    "it": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false,
+    "expect": false
+  }
+}
