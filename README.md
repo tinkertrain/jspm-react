@@ -41,8 +41,8 @@ Everything in the src folder is for example purposes. Have a look to see how eve
 
 - [ ] Integrate rendering at compilation time for the home page (index.html), preferably still using ES6 modules (JSX transpiler doesn't support them)
 - [ ] Incorporate code coverage with Istanbul (waiting on [https://github.com/Workiva/karma-jspm/issues/22](https://github.com/Workiva/karma-jspm/issues/22) from karma-jspm)
-- [ ] (Maybe) Integrate one of the many Flux implementations
-- [ ] (Maybe) Integrate a router
+- [ ] .(Maybe) Integrate one of the many Flux implementations
+- [ ] .(Maybe) Integrate a router
 
 ## Resources
 
