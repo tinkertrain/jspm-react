@@ -14,7 +14,6 @@ var onError = function (err) {
 
 // Settings
 var BUILD = './build';
-var DIST = './dist';
 var SRC = './src';
 
 
@@ -23,35 +22,26 @@ var SRC = './src';
 
 /*
 * 1. Setup a webserver with livereload using BrowserSync
-* 2. JS and CSS get processed and served from the 'build' folder
-* 3. JSX: Transform jsx React files and put in build 'build' folder
-* 4. Compile sass files, autoprefix and put in 'build' folder
+* 2. CSS gets compiled and autoprefixed
 * */
 
- // BrowserSync Server
+// BrowserSync Server
 gulp.task('browser-sync', function() {
   browserSync.init([
-    BUILD + '/css/*.css',
-    BUILD + '/js/**/*.js',
+    SRC + '/css/*.css',
+    SRC + '/js/**/*.js',
+    SRC + '/js/**/*.jsx',
     './**/*.html'
   ],
   {
     notify: false,
     server: {
-      baseDir: [BUILD]
+      baseDir: [SRC]
     },
     port: 3500,
     browser: [],
     tunnel: false
   });
-});
-
-// JSX
-gulp.task('jsx', function() {
-  return gulp.src(SRC + '/**/*.js')
-    .pipe($.cached('jsx'))  //Process only changed files
-    .pipe($.react())
-    .pipe(gulp.dest('build/'));
 });
 
 // Sass
@@ -69,25 +59,12 @@ gulp.task('sass', function() {
     }))
     .pipe($.sourcemaps.write('.'))
     .pipe($.plumber.stop())
-    .pipe(gulp.dest('./build/css'));
+    .pipe(gulp.dest(SRC + '/css'));
 });
 
-// HTML pages
-gulp.task('pages', function() {
-  var render = $.render({
-      template: './src/templates/index.html',
-      data: {title: 'Page Title'},
-      harmony: true
-    })
-    .on('error', onError);
-
-  return gulp.src(BUILD + '/js/main.js')
-    .pipe(render)
-    .pipe(gulp.dest(BUILD));
-});
 
 // serve task
-gulp.task('serve', ['browser-sync', 'jsx', 'sass'] , function(cb) {
+gulp.task('serve', ['browser-sync', 'sass'] , function() {
 
   $.watch(
     SRC + '/sass/**/*.scss',
@@ -99,27 +76,10 @@ gulp.task('serve', ['browser-sync', 'jsx', 'sass'] , function(cb) {
     }
   );
 
-  $.watch(
-    SRC + '/js/**/*.js',
-    {
-      name: 'JS'
-    },
-    function() {
-      gulp.start('jsx');
-    }
-  );
 });
 
-// Delete build Directory
-gulp.task('delete-build', function() {
-  rimraf(BUILD, onError);
-});
 
-//build (no server)
-gulp.task('build', ['jsx', 'sass']);
 
-// Default
-gulp.task('default', ['serve']);
 
 // Tests
 gulp.task('test', function(done) {
@@ -128,59 +88,68 @@ gulp.task('test', function(done) {
   }, done);
 });
 
+// Default
+gulp.task('default', ['serve']);
 
 // DISTRIBUTION TASKS
 //===============================================
 
-// Delete dist Directory
-gulp.task('delete-dist', function() {
-  rimraf(DIST, onError);
+// Delete build Directory
+gulp.task('clean', function() {
+  rimraf(BUILD, onError);
 });
 
 // CSS
 gulp.task('css', function() {
-  return gulp.src(BUILD + '/css/main.css')
+  return gulp.src(SRC + '/css/main.css')
     .pipe($.plumber({
       errorHandler: onError
     }))
-    .pipe(gulp.dest(DIST + '/css'))
+    .pipe(gulp.dest(BUILD + '/css'))
     .pipe($.csso())
     .pipe($.rename('main.min.css'))
     .pipe($.plumber.stop())
-    .pipe(gulp.dest(DIST + '/css'));
+    .pipe(gulp.dest(BUILD + '/css'));
 });
 
-// Copy index.html to 'dist'
+// Copy index.html to 'build'
 gulp.task('html', function() {
   gulp.src(['./index.html'])
-    .pipe(gulp.dest(DIST))
+    .pipe(gulp.dest(BUILD))
     .on('error', onError);
 });
 
-// Bundle with jspm
-gulp.task('bundle', ['jsx'], $.shell.task([
-  'jspm bundle-sfx build/js/main dist/js/app.js'
-]));
-
-// Uglify the bundle
-gulp.task('uglify', function() {
-  return gulp.src(DIST + '/js/app.js')
-    .pipe($.plumber({
-      errorHandler: onError
-    }))
-    .pipe($.sourcemaps.init({loadMaps: true}))
-    .pipe($.uglify())
-    .pipe($.sourcemaps.write('.'))
-    .pipe($.rename('app.min.js'))
-    .pipe($.plumber.stop())
-    .pipe(gulp.dest(DIST + '/js'));
+gulp.task('toCommonjs', function() {
+  return gulp.src(SRC + '/js/**/*.js')
+    .pipe($['6to5']({modules: 'common'}))
+    .pipe(gulp.dest(SRC + '/common/js'));
 });
 
-gulp.task('dist', function() {
+// HTML pages
+gulp.task('pages', function() {
+  var render = $.render({
+    template: './src/index.html'
+  })
+    .on('error', onError);
+
+  return gulp.src(SRC + '/js/components/Feed.js')
+    .pipe(render)
+    .pipe(gulp.dest(BUILD));
+});
+
+
+// Bundle with jspm
+gulp.task('bundle', $.shell.task(
+  [
+    'jspm bundle-sfx js/app build/js/app.js',
+    'jspm bundle-sfx js/app build/js/app.min.js --minify'
+  ]
+));
+
+
+gulp.task('build', function() {
   runSequence(
-    'delete-dist',
-    'build',
-    ['css', 'html', 'bundle'],
-    'uglify'
+    'clean',
+    ['css', 'html', 'bundle']
   );
 });
