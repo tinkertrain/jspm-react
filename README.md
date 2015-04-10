@@ -18,6 +18,7 @@ Configured starter repo to build web apps with React and ES6 modules.
 
 - Clone the repo
 - Install jspm `npm install -g jspm`
+- Install jspm `npm install -g gulp`
 - `npm install`
 - `jspm install`
 - Gulp tasks:
