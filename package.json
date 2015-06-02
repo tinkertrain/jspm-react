@@ -1,8 +1,9 @@
 {
   "jspm": {
     "dependencies": {
-      "bootstrap": "^3.3.1",
-      "react": "^0.12.2"
+      "bootstrap": "github:twbs/bootstrap@^3.3.1",
+      "jsx": "github:floatdrop/plugin-jsx@^1.1.0",
+      "react": "npm:react@^0.12.2"
     }
   },
   "devDependencies": {
@@ -13,7 +14,6 @@
     "gulp-csso": "^0.2.9",
     "gulp-inject": "^1.1.1",
     "gulp-load-plugins": "^0.8.0",
-    "gulp-react": "^2.0.0",
     "gulp-rename": "^1.2.0",
     "gulp-sass": "^1.2.4",
     "gulp-shell": "^0.2.11",

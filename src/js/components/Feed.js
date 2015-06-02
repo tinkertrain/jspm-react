@@ -1,7 +1,7 @@
 import React from 'react';
-import FeedList from './FeedList';
-import FeedForm from './FeedForm';
-import ShowAddButton from './ShowAddButton';
+import FeedList from './FeedList.js!jsx';
+import FeedForm from './FeedForm.js!jsx';
+import ShowAddButton from './ShowAddButton.js!jsx';
 
 var Feed = React.createClass({
 
