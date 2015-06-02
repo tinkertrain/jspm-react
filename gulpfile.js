@@ -13,8 +13,7 @@ var karma = require('karma').server;
 /*
 * 1. Setup a webserver with livereload using BrowserSync
 * 2. JS and CSS get processed and served from the 'build' folder
-* 3. JSX: Transform jsx React files and put in build 'build' folder
-* 4. Compile sass files, autoprefix and put in 'build' folder
+* 3. Compile sass files, autoprefix and put in 'build' folder
 * */
 
  // BrowserSync Server
@@ -36,10 +35,9 @@ gulp.task('browser-sync', function() {
 });
 
 // JSX
-gulp.task('jsx', function() {
+gulp.task('js', function() {
   return gulp.src('src/**/*.js')
-    .pipe(plugins.cached('jsx'))  //Process only changed files
-    .pipe(plugins.react())
+    .pipe(plugins.cached('js'))  //Process only changed files
     .pipe(gulp.dest('build/'));
 });
 
@@ -60,7 +58,7 @@ gulp.task('sass', function() {
 });
 
 // serve task
-gulp.task('serve', ['browser-sync', 'jsx', 'sass'] , function(cb) {
+gulp.task('serve', ['browser-sync', 'js', 'sass'] , function(cb) {
 
   plugins.watch(
     './src/sass/**/*.scss',
@@ -78,7 +76,7 @@ gulp.task('serve', ['browser-sync', 'jsx', 'sass'] , function(cb) {
       name: 'JS'
     },
     function() {
-      gulp.start('jsx');
+      gulp.start('js');
     }
   );
 });
@@ -91,7 +89,7 @@ gulp.task('delete-build', function() {
 });
 
 //build (no server)
-gulp.task('build', ['jsx', 'sass']);
+gulp.task('build', ['js', 'sass']);
 
 // Default
 gulp.task('default', ['serve']);
@@ -132,8 +130,8 @@ gulp.task('html', function() {
 });
 
 // Bundle with jspm
-gulp.task('bundle', ['jsx'], plugins.shell.task([
-  'jspm bundle-sfx build/js/main dist/js/app.js'
+gulp.task('bundle', ['js'], plugins.shell.task([
+  'jspm bundle-sfx build/js/main.js!jsx dist/js/app.js'
 ]));
 
 // Uglify the bundle
