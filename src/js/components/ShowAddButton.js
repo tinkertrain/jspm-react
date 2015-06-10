@@ -1,11 +1,10 @@
 import React from 'react';
-
-var ShowAddButton = React.createClass({
-  render: function() {
-    return (
-      <button className="btn btn-success btn-block">Create New Item</button>
-    );
+var {Component} = React;
+class ShowAddButton extends Component {
+  render() {
+	  return (
+		  <button className="btn btn-success btn-block">Create New Item</button>
+	  );
   }
-});
-
+}
 export default ShowAddButton;
