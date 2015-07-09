@@ -6,7 +6,7 @@
       "react": "npm:react@^0.13.3"
     },
     "devDependencies": {
-      "babel": "npm:babel-core@^5.1.13",
+      "babel": "npm:babel-core@^5.6.15",
       "babel-runtime": "npm:babel-runtime@^5.1.13",
       "core-js": "npm:core-js@^0.9.4"
     }
