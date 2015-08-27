@@ -1,3 +1,5 @@
+Note: This kit is a bit outdated now and I haven't had the time to update it properly, I'm sorry if doesn't work as it should but it might still be a good basis for your projects. I'll try to find some time and update it, in the mean time I accept pull requests (thanks for the ones some people have made btw!). Cheers
+
 Webapp Starter
 ==============
 
