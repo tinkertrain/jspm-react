@@ -20,7 +20,7 @@ var karma = require('karma').server;
 gulp.task('browser-sync', function() {
   browserSync.init([
     './build/css/*.css',
-    './build/js/**/*.js',
+    './build/**/*.js',
     './**/*.html'
   ],
   {
@@ -71,7 +71,7 @@ gulp.task('serve', ['browser-sync', 'js', 'sass'] , function(cb) {
   );
 
   plugins.watch(
-    './src/js/**/*.js',
+    './src/**/*.js',
     {
       name: 'JS'
     },
@@ -131,12 +131,12 @@ gulp.task('html', function() {
 
 // Bundle with jspm
 gulp.task('bundle', ['js'], plugins.shell.task([
-  'jspm bundle-sfx build/js/main.js!jsx dist/js/app.js'
+  'jspm bundle-sfx build/main.js!jsx dist/app.js'
 ]));
 
 // Uglify the bundle
 gulp.task('uglify', function() {
-  return gulp.src('./dist/js/app.js')
+  return gulp.src('./dist/app.js')
     .pipe(plugins.sourcemaps.init({loadMaps: true}))
     .pipe(plugins.uglify())
     .pipe(plugins.sourcemaps.write('.'))

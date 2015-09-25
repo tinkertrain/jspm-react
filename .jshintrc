@@ -25,5 +25,8 @@
     "after": false,
     "afterEach": false,
     "expect": false
-  }
+  },
+  "esnext": true,
+  "expr": true, // removes the need for jshint -W030
+  "node": true
 }
