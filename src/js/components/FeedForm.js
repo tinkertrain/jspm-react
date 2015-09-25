@@ -1,4 +1,3 @@
-/* jshint -W030 */
 'use strict';
 import React from 'react';
 var {Component} = React;
