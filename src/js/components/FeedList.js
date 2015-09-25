@@ -1,19 +1,26 @@
+'use strict';
+
 import React from 'react';
+
 import FeedItem from './FeedItem.js!jsx';
 
-var {Component} = React;
+export class FeedList extends React.Component {
 
-class FeedList extends Component {
   render() {
-    var feedItems = this.props.items.map(function(item) {
-      return <FeedItem key={item.key} title={item.title} desc={item.description} voteCount={item.voteCount} />;
-    });
-
     return (
-        <ul className="list-group container">
-          {feedItems}
-        </ul>
+      <ul className="list-group container">
+        { this.props.items.map(item => {
+          return (
+            <FeedItem
+              key={ item.key }
+              title={ item.title }
+              desc={ item.description }
+              voteCount={ item.voteCount } />
+          );
+        }) }
+      </ul>
     );
   }
 }
+
 export default FeedList;
