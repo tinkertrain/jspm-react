@@ -6,6 +6,7 @@ var rimraf = require('rimraf');
 var browserSync = require('browser-sync');
 var runSequence = require('run-sequence');
 var karma = require('karma').server;
+var htmlreplace = require('gulp-html-replace');
 
 // DEVELOPMENT TASKS
 //================================================
@@ -125,6 +126,9 @@ gulp.task('css', function() {
 // Copy index.html to 'dist'
 gulp.task('html', function() {
   gulp.src(['./index.html'])
+    .pipe(htmlreplace({
+      'js': 'dist/app.js'
+    }))
     .pipe(gulp.dest('./dist'))
     .on('error', plugins.util.log);
 });
