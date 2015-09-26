@@ -25,10 +25,10 @@ export class Feed extends React.Component {
   render() {
     return (
       <div>
-        <div class="jumbotron text-center">
+        <div className="jumbotron text-center">
           <h2>Vote it</h2>
         </div>
-        
+
         <div className="container">
           <ShowAddButton />
         </div>

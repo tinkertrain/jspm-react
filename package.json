@@ -17,6 +17,7 @@
     "gulp-autoprefixer": "^2.0.0",
     "gulp-cached": "^1.0.1",
     "gulp-csso": "^0.2.9",
+    "gulp-html-replace": "^1.5.4",
     "gulp-inject": "^1.1.1",
     "gulp-load-plugins": "^0.8.0",
     "gulp-rename": "^1.2.0",
