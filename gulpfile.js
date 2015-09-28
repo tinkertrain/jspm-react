@@ -1,3 +1,9 @@
+// // Process ES6 on the fly
+// require('babel/register');
+//
+// // Include every file in gulp/scripts
+// require('require-dir')('gulp/scripts');
+
 'use strict';
 
 var gulp = require('gulp');
@@ -36,16 +42,8 @@ var shell = require('gulp-shell');
 // Uglify
 var uglify = require('gulp-uglify');
 
-// DEVELOPMENT TASKS
-//================================================
-
-/*
-* 1. Setup a webserver with livereload using BrowserSync
-* 2. JS and CSS get processed and served from the 'build' folder
-* 3. Compile sass files, autoprefix and put in 'build' folder
-* */
-
- // BrowserSync Server
+// SERVER:DEV
+// BrowserSync Server
 gulp.task('browser-sync', function() {
   browserSync.init([
     './build/css/*.css',
@@ -63,6 +61,7 @@ gulp.task('browser-sync', function() {
   });
 });
 
+// JS:DEV
 // JSX
 gulp.task('js', function() {
   return gulp.src('src/**/*.js')
@@ -70,6 +69,7 @@ gulp.task('js', function() {
     .pipe(gulp.dest('build'));
 });
 
+// CSS:DEV
 // Sass
 gulp.task('sass', function() {
   return gulp.src('./src/sass/main.scss')
@@ -86,6 +86,7 @@ gulp.task('sass', function() {
     .on('error', gutil.log);
 });
 
+// DEV
 // serve task
 gulp.task('serve', ['browser-sync', 'js', 'sass'], function(cb) {
 
@@ -102,6 +103,7 @@ gulp.task('serve', ['browser-sync', 'js', 'sass'], function(cb) {
   });
 });
 
+// CLEAN:DEV
 // Delete build Directory
 gulp.task('delete-build', function() {
   rimraf('./build', function(err) {
@@ -109,12 +111,14 @@ gulp.task('delete-build', function() {
   });
 });
 
+// ??DELETE??
 // build (no server)
 gulp.task('build', ['js', 'sass']);
 
 // Default
 gulp.task('default', ['serve']);
 
+// TEST
 // Tests
 gulp.task('test', function(done) {
   karma.start({
@@ -125,6 +129,7 @@ gulp.task('test', function(done) {
 // DISTRIBUTION TASKS
 //===============================================
 
+// CLEAN:PROD
 // Delete dist Directory
 gulp.task('delete-dist', function() {
   rimraf('./dist', function(err) {
@@ -132,6 +137,7 @@ gulp.task('delete-dist', function() {
   });
 });
 
+// CSS:DIST
 // CSS
 gulp.task('css', function() {
   return gulp.src('./build/css/main.css')
@@ -142,6 +148,7 @@ gulp.task('css', function() {
     .on('error', gutil.log);
 });
 
+// HTML:DIST
 // Copy index.html to 'dist'
 gulp.task('html', function() {
   gulp.src(['./index.html'])
@@ -153,11 +160,13 @@ gulp.task('html', function() {
     .on('error', gutil.log);
 });
 
+// JS:DIST
 // Bundle with jspm
 gulp.task('bundle', ['js'], shell.task([
   'jspm bundle-sfx build/app.js!jsx dist/js/app.js'
 ]));
 
+// INCLUDE WITH ABOVE
 // Uglify the bundle
 gulp.task('uglify', function() {
   return gulp.src('./dist/app.js')
@@ -169,6 +178,9 @@ gulp.task('uglify', function() {
     .on('error', gutil.log);
 });
 
+// DIST
 gulp.task('dist', function() {
   runSequence('delete-dist', 'build', ['css', 'html', 'bundle'], 'uglify');
 });
+
+// SERVER:PROD
