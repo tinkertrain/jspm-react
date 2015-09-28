@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export class FeedItem extends Component {
+export class FeedItem extends React.Component {
 
   render() {
     return (
