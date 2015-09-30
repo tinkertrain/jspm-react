@@ -12,6 +12,7 @@
     }
   },
   "devDependencies": {
+    "babel": "^5.8.23",
     "browser-sync": "^1.9.0",
     "gulp": "^3.8.10",
     "gulp-autoprefixer": "^2.0.0",
@@ -19,6 +20,7 @@
     "gulp-csso": "^0.2.9",
     "gulp-html-replace": "^1.5.4",
     "gulp-inject": "^1.1.1",
+    "gulp-jspm": "^0.3.1",
     "gulp-load-plugins": "^0.8.0",
     "gulp-rename": "^1.2.0",
     "gulp-sass": "^1.2.4",
