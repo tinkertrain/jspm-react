@@ -45,8 +45,9 @@ export default {
   },
 
   htmlReplace: {
-    'js': ['js/bundle.js', 'js/system.js', 'js/config.js'],
-    'css': 'css/bundle.css'
+    'js': ['js/system.js', 'js/config.js', 'js/bundle.js'],
+    'css': 'css/bundle.css',
+    'entry_point': '<script> System.import("src/app.js"); </script>'
   },
 
   handleError: gutil.log,
